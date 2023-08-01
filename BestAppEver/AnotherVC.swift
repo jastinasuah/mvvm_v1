@@ -66,7 +66,6 @@ class AnotherView: UIViewController, UpdatableView {
         shortcutsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         shortcutsView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         shortcutsView.heightAnchor.constraint(equalToConstant: 96).isActive = true
-        
         viewModel.fetchData()
     }
     
@@ -91,36 +90,34 @@ class ShortcutsBanner: UIView {
         collectionView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         collectionView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        
+        addSubview(gearIcon)
+        gearIcon.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
+        gearIcon.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -8).isActive = true
+
     }
     
     func setData(bannerIcons: [ShortcutsBannerViewCell.IconInfo]) {
         self.bannerIcons = bannerIcons
         collectionView.reloadData()
     }
-    
-    func setupGearIcon() {
-        addSubview(gearIcon)
-        gearIcon.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        gearIcon.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    lazy var gearIcon: UIImageView = {
-        let image = UIImage(systemName: "gearshape")
-        let imageView = UIImageView(image: image)
-        imageView.backgroundColor = .cyan
-        imageView.frame = .init(x: 0, y: 0, width: 14  , height: 100)
-        self.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
 
     let cellWidth: CGFloat = 98.33
     let cellHeight: CGFloat = 48
 
-
+    lazy var gearIcon: UIImageView = {
+        var config = UIImage.SymbolConfiguration(paletteColors: [.black])
+        let image = UIImage(systemName: "gearshape",withConfiguration: config)
+        let imageView = UIImageView(image: image)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.frame = CGRect(x: 0, y: 0, width: 14, height: 14)
+        return imageView
+    }()
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
